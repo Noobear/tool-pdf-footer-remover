@@ -1,0 +1,15 @@
+# 처리 대상 원본 파일 (개인 자료)
+origin/
+used/
+
+# 처리 결과물
+output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# macOS
+.DS_Store
