@@ -1,0 +1,17 @@
+[project]
+name = "pdf-footer-remover"
+version = "0.1.0"
+description = "Remove page numbers and a footer line from every page of PDF files"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pymupdf>=1.24"]
+
+[project.scripts]
+pdf-footer-remover = "pdf_footer_remover:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["uv_build>=0.8,<0.13"]
+build-backend = "uv_build"

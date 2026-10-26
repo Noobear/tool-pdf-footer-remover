@@ -1,45 +1,39 @@
-# PDF 하단 텍스트 제거 도구
+# pdf-footer-remover
 
-PDF 파일의 각 페이지 하단에 있는 **페이지 번호**와 **문구(코드 포함)**를 완전히 삭제하는 스크립트입니다.
-
-## 폴더 구조
-
-```
-.
-├── raw/              # 원본 PDF 파일을 여기에 넣으세요
-├── output/           # 처리된 PDF가 여기에 저장됩니다 (자동 생성)
-└── remove_footer.py  # 실행 스크립트
-```
-
-## 요구사항
-
-- Python 3.7 이상
-- PyMuPDF 라이브러리
+PDF 각 페이지 하단의 **페이지 번호**와 **문구**(예: `이 자료는 저작권의 보호를 받는 … (SV-XXXXX)`)를 지운 사본을 만든다. 글자를 흰 상자로 덮는 게 아니라 페이지에서 지우므로(redaction) 검색·복사에도 남지 않는다. 원본은 바꾸지 않는다.
 
 ## 설치
 
-```bash
-pip install pymupdf
-```
-
-## 사용법
-
-1. `raw/` 폴더에 처리할 PDF 파일을 넣습니다.
-2. 스크립트를 실행합니다:
+도구 장부(ops-control `tools/toolbox`)가 네 기기에 설치한다. 손으로 설치하려면:
 
 ```bash
-python remove_footer.py
+uv tool install git+ssh://git@github.com/Noobear/tool-pdf-footer-remover@v0.1.0
 ```
 
-3. `output/` 폴더에서 처리된 파일을 확인합니다.
+## 사용
 
-## 제거 대상
+```bash
+pdf-footer-remover                              # raw/ 의 PDF → output/ (예전 동작)
+pdf-footer-remover 강의자료.pdf 2주차/ -o 정리본/   # 파일·폴더 여러 개
+pdf-footer-remover a.pdf -o out -t "무단 복제 금지"  # 다른 문구 (여러 번 가능)
+pdf-footer-remover a.pdf -o out --keep-page-numbers
+pdf-footer-remover a.pdf -o out --band 0.15      # 번호를 찾는 하단 범위 (기본 10%)
+```
 
-- 각 페이지 하단 중앙의 **페이지 번호**
-- 각 페이지 최하단의 **특정 문구**
-  - 예: `이 자료는 --- 입니다. (SV-XXXXX)`
+파일마다 `N쪽, M곳 지움`을 출력한다. M이 0이면 문구가 다르거나 글자가 이미지다.
 
-## 주의사항
+- 문구: 지정한 문구가 있는 **줄 전체**(가로 폭 전부)를 지운다. 문구 뒤의 코드도 함께 사라진다.
+- 페이지 번호: 하단 범위 안의, 숫자만으로 된 4자리 이하 블록.
+- 결과 폴더가 원본 위치와 같으면 거부한다(exit 2). PDF가 없으면 exit 1.
 
-- 원본 파일은 변경되지 않습니다. 처리 결과는 항상 `output/` 폴더에 저장됩니다.
-- 하단 문구가 다른 언어이거나 다른 키워드로 시작하는 경우, `remove_footer.py` 내의 `COPYRIGHT_TEXT` 변수를 수정하세요.
+## 에이전트
+
+`skill/SKILL.md`가 이 도구의 사용 안내다. 도구 장부가 각 기기의 `~/.agents/skills/pdf-footer-remover/`(Claude Code는 `~/.claude/skills/`에 링크)로 설치하므로, 어느 레포에서 일하는 에이전트든 "PDF 하단 문구 지워 줘"에 이 도구를 쓴다.
+
+## 개발
+
+```bash
+uv run --group dev pytest -q     # 실제 PDF를 만들어 지우고 확인하는 검사
+```
+
+바꾼 뒤에는 `pyproject.toml`의 version을 올리고 같은 이름의 태그(`v0.1.1`)를 push한 다음, ops-control 장부의 버전을 바꾼다.
