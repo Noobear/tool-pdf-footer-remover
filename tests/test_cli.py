@@ -52,4 +52,4 @@ def test_refuses_to_overwrite_and_reports_no_input(tmp_path: Path) -> None:
 def test_version(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit):
         main(["--version"])
-    assert "pdf-footer-remover 0.1.0" in capsys.readouterr().out
+    assert "pdf-footer-remover 0.1.1" in capsys.readouterr().out

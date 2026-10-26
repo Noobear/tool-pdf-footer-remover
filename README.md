@@ -7,7 +7,7 @@ PDF 각 페이지 하단의 **페이지 번호**와 **문구**(예: `이 자료�
 도구 장부(ops-control `tools/toolbox`)가 네 기기에 설치한다. 손으로 설치하려면:
 
 ```bash
-uv tool install git+ssh://git@github.com/Noobear/tool-pdf-footer-remover@v0.1.0
+uv tool install git+ssh://git@github.com/Noobear/tool-pdf-footer-remover@v0.1.1
 ```
 
 ## 사용

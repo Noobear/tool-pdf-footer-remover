@@ -1,10 +1,10 @@
 [project]
 name = "pdf-footer-remover"
-version = "0.1.0"
+version = "0.1.1"
 description = "Remove page numbers and a footer line from every page of PDF files"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["pymupdf>=1.24"]
+dependencies = ["pymupdf>=1.26,<2"]  # 2.0 has no Intel-Mac wheel and pulls in onnxruntime
 
 [project.scripts]
 pdf-footer-remover = "pdf_footer_remover:main"
